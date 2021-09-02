@@ -10,13 +10,14 @@ aufKSTPath = importPath + "Import_Aufteilung_Kostenstellen_" + yesterday.strftim
 lohnartenPath = importPath + "Import_Lohnarten_" + yesterday.strftime('%Y-%m-%d') + ".csv"
 zeitenPath = importPath + "Import_Zeiten_" + yesterday.strftime('%Y-%m-%d') + ".csv"
 
-recipients = ['f.reder@redertrans.at']
+recipients = []
+
 subj = "KST-Fehler bei Import"
 
 whiteList = []
 
 files = {"aufKST": [aufKSTPath, 4, 0, 1, 3],
-         "lohnarten": [lohnartenPath, 14, 0, 1, 6],
+         "lohnarten": [lohnartenPath, 14, 0, 1, 12],
          "zeiten": [zeitenPath, 8, 0, 1, 3]}
 
 msgs = []
@@ -39,7 +40,7 @@ def checkImport(file, name):
             # Nicht auf Whitelist
             if elems[file[1]] not in whiteList:
                 print(elems[file[1]] + " is NOT whitelisted")
-                msgs.append(name + "  -- Firma: " + elems[file[2]] + " PersNR: " + elems[file[3]] + " Tag: " + elems[file[4]] + "\n")
+                msgs.append(name + "  -- Firma: " + elems[file[2]] + " PersNR: " + elems[file[3]] + " Tag: " + elems[file[4]] + " -- KST " + elems[file[1]] + " nicht gefunden! <br>")
 
                 count = 0
                 new_row = ""
@@ -80,13 +81,26 @@ def sendEmail():
     for msg in msgs:
         text = text + msg
 
+    text = text + "<br><br>Alle KST durch 'DUMMY' ersetzt."
+
     print(text)
 
     mymail.htmladd(text)
 
     mymail.send()
 
+
+def loadEmailRecipients():
+    with open("C:/CMD/moonKSTcheckMail.csv") as f:
+        csvlines = f.readlines()
+        for x in range(0, len(csvlines)):
+            recipients.append(csvlines[x].rstrip())
+
+    print(recipients)
+
 def main():
+    loadEmailRecipients()
+
     readWhitelist()
 
     checkImport(files["aufKST"], "Aufteilung Kostenstellen")
