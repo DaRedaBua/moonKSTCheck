@@ -4,7 +4,7 @@ import Bimail
 today = datetime.date.today()
 yesterday = today - datetime.timedelta(days=1)
 
-whitePath = "C:/LX_Import/CHECK/KST_EXPORT_" + yesterday.strftime('%Y_%m_%d') + ".csv"
+whitePath = "C:/CMD/KST_CHECK/KST_EXPORT_" + yesterday.strftime('%Y_%m_%d') + ".csv"
 importPath = "C:/LX_Import/" + yesterday.strftime('%Y-%m-%d') + "/"
 aufKSTPath = importPath + "Import_Aufteilung_Kostenstellen_" + yesterday.strftime('%Y-%m-%d') + ".csv"
 lohnartenPath = importPath + "Import_Lohnarten_" + yesterday.strftime('%Y-%m-%d') + ".csv"
