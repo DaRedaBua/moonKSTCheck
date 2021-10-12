@@ -37,7 +37,7 @@ def checkImport(file, name):
 
         #Erste Zeile (Header) Auslassen
         if row != 0:
-            # Nicht auf Whitelist
+
             if elems[file[1]] not in whiteList:
                 print(elems[file[1]] + " is NOT whitelisted")
                 msgs.append(name + "  -- Firma: " + elems[file[2]] + " PersNR: " + elems[file[3]] + " Tag: " + elems[file[4]] + " -- KST " + elems[file[1]] + " nicht gefunden! <br>")
@@ -105,7 +105,7 @@ def main():
 
     checkImport(files["aufKST"], "Aufteilung Kostenstellen")
     checkImport(files["lohnarten"], "Lohnarten")
-    checkImport(files["zeiten"], "Zeiten")
+    #checkImport(files["zeiten"], "Zeiten")
 
     sendEmail()
 
