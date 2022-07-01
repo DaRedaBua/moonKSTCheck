@@ -1,0 +1,10 @@
+t.haemmerle@redertrans.at;f.reder@redertrans.at;;;;
+kstwhitelist;C:/CMD/KST_CHECK/KST_EXPORT_;-1;%Y_%m_%d;.csv;
+inputPath;C:/LX_Import/;-1;%Y-%m-%d;/;
+aufteilungFile;Import_Aufteilung_Kostenstellen_;-1;%Y-%m-%d;.csv;
+lohnartenFile;Import_Lohnarten_;-1;%Y-%m-%d;.csv;
+zeitenFile;Import_Zeiten_;-1;%Y-%m-%d;.csv
+Colums;KST;Firma;PersNr;Tag;
+aufKST;4;0;1;3;
+lohnarten;14;0;1;12;
+zeiten;8;0;1;3;
