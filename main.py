@@ -47,98 +47,105 @@ def checkImport(path, cols, name, outpath):
 
     msgs.append("<br>")
 
-    try:
-        with open(path, 'r') as f:
-            csvlines = f.readlines()
-    
-            msg += "<br>" + name + "-Datei erfolgreich geladen: <br>      " + path + '<br>'
-            msgs.append("<br>" + name + "-Datei erfolgreich geladen: <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + path + '<br>')
-            opensuccess = True
-
-    except Exception as e:
-        msg += "Konnte Datei " + name + " nicht öffnen - " + path + "<br>"
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        msg += str(exc_type, fname, str(exc_tb.tb_lineno)) + '<br>'
-
-    msg += "Opensuccess: " + str(opensuccess) + '<br>'
-
-    #try:
-    if opensuccess:
-        msg += "Starte Ersetzungsvorgang" + "<br>"
-        msgs.append("&nbsp&nbsp&nbsp&nbsp&nbsp&nbspStarte Ersetzunngsvorgang<br>")
-
-        for row in range(1, len(csvlines)):
-            new_row = csvlines[row]
-            #msg += new_row + '<br>'
-
-            elems = csvlines[row].split(';')
-
-            if elems[cols[0]] not in whiteList:
-                msgs.append(name + "  -- Firma: " + elems[cols[1]] + " PersNR: " + elems[cols[2]] + " Tag: " + elems[cols[3]] + " -- KST " + elems[cols[0]] + " nicht gefunden - KST nicht in Whitelist! <br>")
-                msg += name + "  -- Firma: " + elems[cols[1]] + " PersNR: " + elems[cols[2]] + " Tag: " + elems[cols[3]] + " -- KST " + elems[cols[0]] + " nicht gefunden - KST nicht in Whitelist! <br>"
-
-                count = 0
-                new_row = ""
-
-                #Zeile neu basteln, nur fündiges ersetzten durch DUMMY
-                for e in elems:
-                    if count != cols[0]:
-                        new_row = new_row + e.rstrip()
-                    else:
-                        new_row = new_row + "DUMMY"
-
-                    count = count + 1
-
-                    if count != len(elems):
-                        new_row = new_row + ";"
-                    else:
-                        new_row = new_row + "<br>"
-
-            new_rows.append(new_row)
-
-        msg += "<br><br>Ersetzungsvorgang für " + name + " abgeschlossen"
-        replacesuccess = True
-
-    msg += "<br>Replacesuccess: " + str(replacesuccess) + '<br>'
-
-    if replacesuccess:
-        try:
-            msg += "Schreibe datei in outpath - " + outpath + "<br>"
-
-            with open(outpath , 'w') as f:
-                for row in new_rows:
-                    f.write(row)
-
-            f.close()
-
-            msgs.append("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + name + "-Datei erfolgreich gespeichert:<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + outpath + '<br>')
-            msg += name + "-Datei erfolgreich gespeichert:<br>      " + outpath
-
-        except Exception as e:
-            print(outpath)
-            msg += "Konnte Datei nicht speichern - ECHT " + outpath
-            msg += traceback.format_exc()
+    if not cols[4] == "IGNORE":
 
         try:
-            msg += "Schreibe Daten zurück in ouriginaldatei - " + path
+            with open(path, 'r') as f:
+                csvlines = f.readlines()
 
-            with open(path, 'w') as f:
-                for row in new_rows:
-                    f.write(row)
-
-            f.close()
-
-            msgs.append("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + name + "-Datei erfolgreich zurückgeschrieben:<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + path)
-            msg += name + "-Datei erfolgreich zurückgeschrieben:<br>      " + path
+                msg += "<br>" + name + "-Datei erfolgreich geladen: <br>      " + path + '<br>'
+                msgs.append("<br>" + name + "-Datei erfolgreich geladen: <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + path + '<br>')
+                opensuccess = True
 
         except Exception as e:
-            msg += "Konnte Datei nicht speichern - ORIGINALDATEI " + path
+            msg += "Konnte Datei " + name + " nicht öffnen - " + path + "<br>"
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             msg += str(exc_type, fname, str(exc_tb.tb_lineno)) + '<br>'
 
-        msg += teiler
+        msg += "Opensuccess: " + str(opensuccess) + '<br>'
+
+        #try:
+        if opensuccess:
+            msg += "Starte Ersetzungsvorgang" + "<br>"
+            msgs.append("&nbsp&nbsp&nbsp&nbsp&nbsp&nbspStarte Ersetzunngsvorgang<br>")
+
+            for row in range(1, len(csvlines)):
+
+                new_row = csvlines[row]
+                #msg += new_row + '<br>'
+
+                if cols[4] == 'CHECK':
+
+                    elems = csvlines[row].split(';')
+
+                    if elems[cols[0]] not in whiteList:
+                        msgs.append(name + "  -- Firma: " + elems[cols[1]] + " PersNR: " + elems[cols[2]] + " Tag: " + elems[cols[3]] + " -- KST " + elems[cols[0]] + " nicht gefunden - KST nicht in Whitelist! <br>")
+                        msg += name + "  -- Firma: " + elems[cols[1]] + " PersNR: " + elems[cols[2]] + " Tag: " + elems[cols[3]] + " -- KST " + elems[cols[0]] + " nicht gefunden - KST nicht in Whitelist! <br>"
+
+                        count = 0
+                        new_row = ""
+
+                        #Zeile neu basteln, nur fündiges ersetzten durch DUMMY
+                        for e in elems:
+                            if count != cols[0]:
+                                new_row = new_row + e.rstrip()
+                            else:
+                                new_row = new_row + "DUMMY"
+
+                            count = count + 1
+
+                            if count != len(elems):
+                                new_row = new_row + ";"
+                            else:
+                                new_row = new_row + "<br>"
+
+
+
+                new_rows.append(new_row)
+
+            msg += "<br><br>Ersetzungsvorgang für " + name + " abgeschlossen"
+            replacesuccess = True
+
+        msg += "<br>Replacesuccess: " + str(replacesuccess) + '<br>'
+
+        if replacesuccess and (cols[4] == "CHECK" or cols[4] == "COPY"):
+            try:
+                msg += "Schreibe datei in outpath - " + outpath + "<br>"
+
+                with open(outpath , 'w') as f:
+                    for row in new_rows:
+                        f.write(row)
+
+                f.close()
+
+                msgs.append("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + name + "-Datei erfolgreich gespeichert:<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + outpath + '<br>')
+                msg += name + "-Datei erfolgreich gespeichert:<br>      " + outpath + '<br>'
+
+            except Exception as e:
+                print(outpath)
+                msg += "Konnte Datei nicht speichern - ECHT " + outpath + '<br>'
+                msg += traceback.format_exc()
+
+            try:
+                msg += "Schreibe Daten zurück in ouriginaldatei - " + path + '<br>'
+
+                with open(path, 'w') as f:
+                    for row in new_rows:
+                        f.write(row)
+
+                f.close()
+
+                msgs.append("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + name + "-Datei erfolgreich zurückgeschrieben:<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + path + '<br>')
+                msg += name + "-Datei erfolgreich zurückgeschrieben:<br>      " + path + '<br>'
+
+            except Exception as e:
+                msg += "Konnte Datei nicht speichern - ORIGINALDATEI " + path + '<br>'
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                msg += str(exc_type, fname, str(exc_tb.tb_lineno)) + '<br>'
+
+            msg += teiler
 
 
 def readWhitelist():
@@ -259,7 +266,7 @@ def loadConfig():
                 # if x == 6: überschrift für Colums
 
                 if x == 7 or x == 8 or x == 9:
-                    files[lineElems[0]] = [int(lineElems[1]), int(lineElems[2]), int(lineElems[3]), int(lineElems[4])]
+                    files[lineElems[0]] = [int(lineElems[1]), int(lineElems[2]), int(lineElems[3]), int(lineElems[4]), lineElems[5]]
 
                 # nur für msg DOKU
                 if x == 9:
@@ -313,7 +320,6 @@ def main():
 
     global msg
 
-
     loadConfig()
 
     if readConfSuccess:
@@ -322,7 +328,7 @@ def main():
     if readWhiteSucess and readConfSuccess:
         checkImport(aufKSTPath, files["aufteilungKSTs"], "Aufteilung Kostenstellen", outAufPath)
         checkImport(lohnartenPath, files["lohnarten"], "Lohnarten", outLohnartenPath)
-        #checkImport(zeitenPath, files["zeiten"], "Zeiten", outZeitenPath)
+        checkImport(zeitenPath, files["zeiten"], "Zeiten", outZeitenPath)
 
     sendEmail()
 

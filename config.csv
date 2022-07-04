@@ -4,11 +4,11 @@ inputPath;//rt-app16/c$/LX_Import/;-1;%Y-%m-%d;/;
 aufteilungFile;Import_Aufteilung_Kostenstellen_;-1;%Y-%m-%d;.csv;
 lohnartenFile;Import_Lohnarten_;-1;%Y-%m-%d;.csv;
 zeitenFile;Import_Zeiten_;-1;%Y-%m-%d;.csv
----Colums;KST;Firma;PersNr;Tag;---
-aufteilungKSTs;4;0;1;3;
-lohnarten;14;0;1;12;
-zeiten;8;0;1;3;
+---Colums;KST;Firma;PersNr;Tag;CHECK/COPY/IGNORE
+aufteilungKSTs;4;0;1;3;CHECK;
+lohnarten;14;0;1;12;CHECK;
+zeiten;8;0;1;3;COPY;
 ---outDateiname; Pfad; ...;;;;---
-Import_Aufteilung_Kostenstellen_;//rt-app16/c$/CMD/RS2_Import;-1;%Y_%m_%d;.csv;
-outLohnarten;//rt-app16/c$/CMD/RS2_Import;-1;%Y_%m_%d;.csv;
-outZeiten;//rt-app16/c$/CMD/RS2_Import;-1;%Y_%m_%d;.csv;
+Import_Aufteilung_Kostenstellen_;//rt-app16/c$/CMD/RS2_Import;-1;%Y-%m-%d;.csv;
+Import_Lohnarten_;//rt-app16/c$/CMD/RS2_Import;-1;%Y-%m-%d;.csv;
+Import_Zeiten_;//rt-app16/c$/CMD/RS2_Import;-1;%Y-%m-%d;.csv;
