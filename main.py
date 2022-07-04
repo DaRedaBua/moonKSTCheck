@@ -119,8 +119,8 @@ def checkImport(path, cols, name, outpath):
 
                 f.close()
 
-                msgs.append("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + name + "-Datei erfolgreich gespeichert:<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + outpath + '<br>')
-                msg += name + "-Datei erfolgreich gespeichert:<br>      " + outpath + '<br>'
+                msgs.append("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b>" + name + "-Datei erfolgreich gespeichert:<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + outpath + '</b><br>')
+                msg += '<b>' + name + "-Datei erfolgreich gespeichert:<br>      " + outpath + '</b><br>'
 
             except Exception as e:
                 print(outpath)
@@ -128,7 +128,7 @@ def checkImport(path, cols, name, outpath):
                 msg += traceback.format_exc()
 
             try:
-                msg += "Schreibe Daten zurück in ouriginaldatei - " + path + '<br>'
+                msg += "Schreibe Daten zurück in originaldatei - " + path + '<br>'
 
                 with open(path, 'w') as f:
                     for row in new_rows:
@@ -136,8 +136,8 @@ def checkImport(path, cols, name, outpath):
 
                 f.close()
 
-                msgs.append("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + name + "-Datei erfolgreich zurückgeschrieben:<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + path + '<br>')
-                msg += name + "-Datei erfolgreich zurückgeschrieben:<br>      " + path + '<br>'
+                msgs.append("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b>" + name + "-Datei erfolgreich zurückgeschrieben:<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + path + '</b><br>')
+                msg += '<b>' + name + "-Datei erfolgreich zurückgeschrieben:<br>      " + path + '</b><br>'
 
             except Exception as e:
                 msg += "Konnte Datei nicht speichern - ORIGINALDATEI " + path + '<br>'
