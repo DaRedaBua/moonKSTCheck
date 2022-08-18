@@ -70,18 +70,18 @@ def checkImport(path, cols, name, outpath):
             msg += "Starte Ersetzungsvorgang" + "<br>"
             msgs.append("&nbsp&nbsp&nbsp&nbsp&nbsp&nbspStarte Ersetzunngsvorgang<br>")
 
-            for row in range(1, len(csvlines)):
+            for row in range(0, len(csvlines)):
 
                 new_row = csvlines[row]
                 #msg += new_row + '<br>'
 
-                if cols[4] == 'CHECK':
+                if cols[4] == 'CHECK' and row > 0:
 
                     elems = csvlines[row].split(';')
 
                     if elems[cols[0]] not in whiteList:
-                        msgs.append(name + "  -- Firma: " + elems[cols[1]] + " PersNR: " + elems[cols[2]] + " Tag: " + elems[cols[3]] + " -- KST " + elems[cols[0]] + " nicht gefunden - KST nicht in Whitelist! <br>")
-                        msg += name + "  -- Firma: " + elems[cols[1]] + " PersNR: " + elems[cols[2]] + " Tag: " + elems[cols[3]] + " -- KST " + elems[cols[0]] + " nicht gefunden - KST nicht in Whitelist! <br>"
+                        msgs.append(name + "<b><br><br>  -- Firma: " + elems[cols[1]] + " PersNR: " + elems[cols[2]] + " Tag: " + elems[cols[3]] + " -- KST " + elems[cols[0]] + " nicht gefunden - KST nicht in Whitelist! <br><br></b>")
+                        msg += name + "<b><br><br>  -- Firma: " + elems[cols[1]] + " PersNR: " + elems[cols[2]] + " Tag: " + elems[cols[3]] + " -- KST " + elems[cols[0]] + " nicht gefunden - KST nicht in Whitelist! <br><br></b>"
 
                         count = 0
                         new_row = ""
@@ -98,7 +98,7 @@ def checkImport(path, cols, name, outpath):
                             if count != len(elems):
                                 new_row = new_row + ";"
                             else:
-                                new_row = new_row + "<br>"
+                                new_row = new_row + "\n"
 
 
 
